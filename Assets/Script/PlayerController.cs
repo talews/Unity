@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
-
+    private int presentes;
+    public Text presenteTxt;
     public Animator  Anime;
     public Rigidbody2D PlayerRigibody;
     public int ForceJump;
@@ -20,6 +22,9 @@ public class PlayerController : MonoBehaviour {
     public float TimeTemp;
     //colisor
     public Transform colisor;
+    public GameObject particula;
+ 
+    
 
 	// Use this for initialization
 	void Start () {
@@ -59,7 +64,29 @@ public class PlayerController : MonoBehaviour {
         }
 
         Anime.SetBool("jump", !ground);      //a exclação torna o valor negativo,Passar valores para a variavel Anime
-        Anime.SetBool("slide", slide);
+        Anime.SetBool("slide", slide);    
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "presente")
+        {
             
+            presentes += 1;
+            presenteTxt.text = presentes.ToString();
+             
+            Destroy(col.gameObject);
+            Instantiate(particula, col.transform.position, col.transform.rotation);
+            
+           
+            
+           
+
+
+
+        }
+        
     }
 }
+
